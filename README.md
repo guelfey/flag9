@@ -14,7 +14,7 @@ go get github.com/guelfey/flag9
 ### Documentation
 
 See the package documentation on
-[godoc.org](godoc.org/github.com/guelfey/flag9).
+[godoc.org](http://godoc.org/github.com/guelfey/flag9).
 
 ### License
 
