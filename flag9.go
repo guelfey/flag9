@@ -15,9 +15,9 @@ import (
 
 // Args are a set of arguments being parsed.
 type Args struct {
-	s    []string
-	c    rune
-	cur  string
+	s   []string
+	c   rune
+	cur string
 }
 
 // NewArgs returns an Args structure that can be used to parse the given slice
