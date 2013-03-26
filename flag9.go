@@ -51,6 +51,17 @@ func (a *Args) Argf() (string, bool) {
 	return cur, true
 }
 
+// Eargf behaves like Argf, but runs the given function and panics afterwards if
+// no option argument is present.
+func (a *Args) Eargf(f func()) string {
+	s, ok := a.Argf()
+	if !ok {
+		f()
+		panic("flag9: Eargf failed")
+	}
+	return s
+}
+
 // Argv returns the arguments that are not (yet) processed.
 func (a *Args) Argv() []string {
 	return a.s
@@ -102,6 +113,12 @@ func Argf() (string, bool) {
 // Argv returns the command-line arguments that are not (yet) processed.
 func Argv() []string {
 	return cmdline.Argv()
+}
+
+// Eargf behaves like Argf, but runs the given function and panics afterwards if
+// no option argument is present.
+func Eargf(f func()) string {
+	return cmdline.Eargf(f)
 }
 
 // Next tries to read the next option character from the command-line arguments.
