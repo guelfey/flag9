@@ -23,11 +23,10 @@ type Args struct {
 // NewArgs returns an Args structure that can be used to parse the given slice
 // of strings.
 func NewArgs(s []string) *Args {
-	return &Args{s, utf8.RuneError, ""}
+	return &Args{s, -1, ""}
 }
 
-// Argc returns the current option character. If it is called before the first
-// call to Next or after it returned false, the error rune is returned.
+// Argc returns the current option character.
 func (a *Args) Argc() rune {
 	return a.c
 }
@@ -63,7 +62,7 @@ func (a *Args) Argv() []string {
 func (a *Args) Next() bool {
 	if a.cur == "" {
 		if len(a.s) == 0 {
-			a.c = utf8.RuneError
+			a.c = -1
 			return false
 		}
 		switch {
@@ -71,7 +70,7 @@ func (a *Args) Next() bool {
 			a.s = a.s[1:]
 			fallthrough
 		case a.s[0] == "-" || !strings.HasPrefix(a.s[0], "-"):
-			a.c = utf8.RuneError
+			a.c = -1
 			return false
 		}
 		a.cur = a.s[0][1:]
@@ -83,11 +82,9 @@ func (a *Args) Next() bool {
 	return true
 }
 
-var cmdline = &Args{os.Args[1:], utf8.RuneError, ""}
+var cmdline = &Args{os.Args[1:], -1, ""}
 
-// Argc returns the current option character from the command-line arguments. If
-// it is called before the first call to Next or after it returned false, the
-// error rune is returned.
+// Argc returns the current option character from the command-line arguments.
 func Argc() rune {
 	return cmdline.Argc()
 }
